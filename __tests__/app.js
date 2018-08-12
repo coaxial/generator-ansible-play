@@ -22,6 +22,7 @@ describe('generator-ansible-play:app', () => {
         .run(path.join(__dirname, '../generators/app'))
         .withPrompts({ initGit: false });
     });
+
     it('will not', () => {
       assert.noFile('.git');
     });

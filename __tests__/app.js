@@ -14,7 +14,7 @@ describe('generator-ansible-play:app', () => {
     it('initializes a git repo', () => {
       assert.file('.git');
     });
-  })
+  });
 
   describe('when told not to init a git repo', () => {
     beforeAll(() => {
@@ -23,7 +23,7 @@ describe('generator-ansible-play:app', () => {
         .withPrompts({ initGit: false });
     });
     it('will not', () => {
-      assert.noFile('.git')
-    })
-  })
+      assert.noFile('.git');
+    });
+  });
 });

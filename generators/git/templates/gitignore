@@ -1,0 +1,7 @@
+*.key
+*.log
+*.pyc
+*.retry
+.vagrant
+.vault_pass
+__pycache__

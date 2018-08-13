@@ -10,6 +10,7 @@ module.exports = class extends Generator {
         message: 'Initialize a git repository and generate a .gitignore?',
         default: true,
         required: true,
+        store: true,
       },
       {
         type: 'input',
@@ -18,6 +19,7 @@ module.exports = class extends Generator {
         default: 'github.com',
         when: answers => answers.initGit,
         required: true,
+        store: true,
       },
       {
         type: 'input',
@@ -25,6 +27,7 @@ module.exports = class extends Generator {
         message: 'What is the username on the git server?',
         when: answers => answers.initGit,
         required: true,
+        store: true,
       },
       {
         type: 'input',
@@ -51,7 +54,5 @@ module.exports = class extends Generator {
     }
   }
 
-  install() {
-    this.installDependencies();
-  }
+  install() {}
 };

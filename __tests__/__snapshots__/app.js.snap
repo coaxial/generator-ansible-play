@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generator-ansible-play:app by default generates a .gitignore file 1`] = `
+"*.key
+*.log
+*.pyc
+*.retry
+.vagrant
+.vault_pass
+__pycache__
+"
+`;

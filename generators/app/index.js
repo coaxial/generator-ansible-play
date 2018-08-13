@@ -7,9 +7,28 @@ module.exports = class extends Generator {
       {
         type: 'confirm',
         name: 'initGit',
-        message: 'Initialize a git repository?',
-        default: true
-      }
+        message: 'Initialize a git repository and generate a .gitignore?',
+        default: true,
+      },
+      {
+        type: 'input',
+        name: 'gitHost',
+        message: 'What is the hostname for the server hosting the git repo?',
+        default: 'github.com',
+        when: answers => answers.initGit,
+      },
+      {
+        type: 'input',
+        name: 'gitUser',
+        message: 'What is the username on the git server?',
+        when: answers => answers.initGit,
+      },
+      {
+        type: 'input',
+        name: 'gitRepo',
+        message: "What is the repo's name on the git server?",
+        when: answers => answers.initGit,
+      },
     ];
 
     return this.prompt(prompts).then(props => {
@@ -21,12 +40,11 @@ module.exports = class extends Generator {
     const p = this.props;
 
     if (p.initGit) {
+      const originUrl = `git@${p.gitHost}:${p.gitUser}/${p.gitRepo}.git`;
       this.spawnCommandSync('git', ['init', '--quiet']);
+      this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
+      this.spawnCommandSync('git', ['remote', 'add', 'origin', originUrl]);
     }
-    this.fs.copy(
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
-    );
   }
 
   install() {

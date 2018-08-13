@@ -8,9 +8,12 @@ const path = require('path');
 describe('generator-ansible-play:app', () => {
   describe('by default', () => {
     beforeAll(() => {
-      return helpers
-        .run(path.join(__dirname, '../generators/app'))
-        .withPrompts({ initGit: true, gitHost: 'example.com', gitUser: 'coaxial', gitRepo: 'myrepo' });
+      return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
+        initGit: true,
+        gitHost: 'example.com',
+        gitUser: 'coaxial',
+        gitRepo: 'myrepo',
+      });
     });
 
     it('initializes a git repo', () => {
@@ -24,7 +27,9 @@ describe('generator-ansible-play:app', () => {
     });
 
     it('sets the correct origin URL', () => {
-      gitRemoteOriginUrl().then(originUrl => expect(originUrl).toEqual('git@example.com:coaxial/myrepo.git'));
+      const expected = 'git@example.com:coaxial/myrepo.git';
+
+      gitRemoteOriginUrl().then(originUrl => expect(originUrl).toEqual(expected));
     });
   });
 

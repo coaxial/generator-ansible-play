@@ -1,5 +1,6 @@
 'use strict';
 const gitRemoteOriginUrl = require('git-remote-origin-url');
+
 const { readFileSync } = require('fs');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
@@ -27,9 +28,11 @@ describe('generator-ansible-play:git', () => {
     });
 
     it('sets the correct origin URL', () => {
+      expect.assertions(1);
+
       const expected = 'git@example.com:coaxial/myrepo.git';
 
-      gitRemoteOriginUrl().then(originUrl => expect(originUrl).toEqual(expected));
+      return gitRemoteOriginUrl().then(originUrl => expect(originUrl).toEqual(expected));
     });
   });
 

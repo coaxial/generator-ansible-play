@@ -9,7 +9,7 @@ const path = require('path');
 describe('generator-ansible-play:git', () => {
   describe('by default', () => {
     beforeAll(() => {
-      return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
+      return helpers.run(path.join(__dirname, '../generators/git')).withPrompts({
         initGit: true,
         gitHost: 'example.com',
         gitUser: 'coaxial',
@@ -39,7 +39,7 @@ describe('generator-ansible-play:git', () => {
   describe('when told not to init a git repo', () => {
     beforeAll(() => {
       return helpers
-        .run(path.join(__dirname, '../generators/app'))
+        .run(path.join(__dirname, '../generators/git'))
         .withPrompts({ initGit: false });
     });
 

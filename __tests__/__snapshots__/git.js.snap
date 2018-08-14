@@ -8,5 +8,6 @@ exports[`generator-ansible-play:git by default generates a .gitignore file 1`] =
 .vagrant
 .vault_pass
 __pycache__
+.yo-rc.json
 "
 `;

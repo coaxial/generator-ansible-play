@@ -5,3 +5,4 @@
 .vagrant
 .vault_pass
 __pycache__
+.yo-rc.json

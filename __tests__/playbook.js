@@ -8,6 +8,7 @@ describe('generator-ansible-play:playbook', () => {
   beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/playbook')).withPrompts({
       limit: 'test-host',
+      bootstrapPython: true,
     });
   });
 

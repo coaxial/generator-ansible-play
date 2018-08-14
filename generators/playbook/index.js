@@ -9,8 +9,16 @@ module.exports = class extends Generator {
         name: 'limit',
         message:
           'Which host will this playbook target? (single host or comma separated list, eg `host1,host2`)',
+        type: 'input',
         required: true,
         default: 'all',
+      },
+      {
+        name: 'bootstrapPython',
+        message: 'Do the targeted hosts need Python installed?',
+        type: 'confirm',
+        required: true,
+        default: true,
       },
     ];
 
@@ -30,9 +38,20 @@ module.exports = class extends Generator {
         limit: p.limit,
       });
 
-      const files = ['requirements.yml', 'playbook.yml'];
-      files.forEach(file =>
-        this.fs.copy(this.templatePath(file), this.destinationPath(file)),
+      this.fs.copyTpl(
+        this.templatePath('playbook.yml'),
+        this.destinationPath('playbook.yml'),
+        {
+          bootstrapPython: p.bootstrapPython,
+        },
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('requirements.yml'),
+        this.destinationPath('requirements.yml'),
+        {
+          bootstrapPython: p.bootstrapPython,
+        },
       );
     };
 

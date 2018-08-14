@@ -4,4 +4,6 @@
 #   name: user.repo
 # Otherwise:
 # - src: coaxial.base
-# - src: coaxial.raw-python
+<% if (bootstrapPython) { -%>
+- src: coaxial.raw-python
+<% } -%>

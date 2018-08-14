@@ -1,0 +1,10 @@
+    - name: Install Python
+      include_role:
+        name: "{{ rolevar.name }}"
+      vars: "{{ rolevar.vars | default(omit) }}"
+      with_items:
+        - name: coaxial.raw-python
+          vars:
+            rawpython__os_family: Debian
+      loop_control:
+        loop_var: rolevar

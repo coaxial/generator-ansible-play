@@ -1,6 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generator-ansible-play:playbook creates the Makefile 1`] = `
+exports[`generator-ansible-play:playbook when not bootstrapping Python creates the playbook 1`] = `
+"---
+- hosts: all
+  become: true
+  # vars:
+  #   - myvar: value
+  vars_files:
+    - vars/enc_vars.yml
+    - vars/vars.yml
+  tasks:
+"
+`;
+
+exports[`generator-ansible-play:playbook when not bootstrapping Python creates the requirements file 1`] = `
+"---
+# If Galaxy is down, use:
+# - src: https://example.org/user/repo.git
+#   name: user.repo
+# Otherwise:
+# - src: coaxial.base
+"
+`;
+
+exports[`generator-ansible-play:playbook with the default answers creates the Makefile 1`] = `
 "limit ?= \\"test-host\\"
 .PHONY: all install_reqs playbook_run clean limit_info editvars
 
@@ -36,7 +59,7 @@ clean:
 "
 `;
 
-exports[`generator-ansible-play:playbook creates the playbook 1`] = `
+exports[`generator-ansible-play:playbook with the default answers creates the playbook 1`] = `
 "---
 - hosts: all
   become: true
@@ -61,7 +84,7 @@ exports[`generator-ansible-play:playbook creates the playbook 1`] = `
 "
 `;
 
-exports[`generator-ansible-play:playbook creates the requirements file 1`] = `
+exports[`generator-ansible-play:playbook with the default answers creates the requirements file 1`] = `
 "---
 # If Galaxy is down, use:
 # - src: https://example.org/user/repo.git

@@ -53,6 +53,14 @@ module.exports = class extends Generator {
           bootstrapPython: p.bootstrapPython,
         },
       );
+
+      const mainDests = ['handlers', 'tasks'];
+      mainDests.forEach(dest =>
+        this.fs.copy(
+          this.templatePath('main.yml'),
+          this.destinationPath(`${dest}/main.yml`),
+        ),
+      );
     };
 
     createSkel();

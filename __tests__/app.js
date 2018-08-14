@@ -12,7 +12,7 @@ describe('generator-ansible-play:app', () => {
         authorEmail: 'cxl@example.org',
         authorWebsite: 'https://example.org',
         license: 'MIT',
-        playbookName: 'test playbook',
+        playName: 'test playbook',
       });
     });
 

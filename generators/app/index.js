@@ -8,9 +8,9 @@ module.exports = class extends Generator {
   prompting() {
     const prompts = [
       {
-        name: 'playbookName',
+        name: 'playName',
         type: 'input',
-        message: "What will the new playbook's name be?",
+        message: "What will the new play's name be?",
         require: true,
       },
       {
@@ -48,7 +48,9 @@ module.exports = class extends Generator {
       email: p.authorEmail,
       website: p.authorWebsite,
     });
-    this.composeWith(require.resolve('../playbook'));
+    this.composeWith(require.resolve('../playbook'), {
+      playbookName: p.playName,
+    });
   }
 
   writing() {
@@ -62,7 +64,7 @@ module.exports = class extends Generator {
       }
     };
 
-    createDestdir(paramCase(p.playbookName));
+    createDestdir(paramCase(p.playName));
   }
 
   install() {}

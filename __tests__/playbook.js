@@ -18,7 +18,7 @@ describe('generator-ansible-play:playbook', () => {
     });
 
     it('creates the empty yml files', () => {
-      assert.file(['handlers/main.yml', 'tasks/main.yml']);
+      assert.file(['vars/vars.yml', 'handlers/main.yml', 'tasks/main.yml']);
     });
 
     it('creates the Makefile', () => {

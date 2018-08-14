@@ -54,12 +54,9 @@ module.exports = class extends Generator {
         },
       );
 
-      const mainDests = ['handlers', 'tasks'];
+      const mainDests = ['handlers/main.yml', 'tasks/main.yml', 'vars/vars.yml'];
       mainDests.forEach(dest =>
-        this.fs.copy(
-          this.templatePath('main.yml'),
-          this.destinationPath(`${dest}/main.yml`),
-        ),
+        this.fs.copy(this.templatePath('main.yml'), this.destinationPath(dest)),
       );
     };
 

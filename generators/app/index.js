@@ -1,9 +1,18 @@
 'use strict';
 const Generator = require('yeoman-generator');
+const mkdirp = require('mkdirp');
+const { paramCase } = require('change-case');
+const path = require('path');
 
 module.exports = class extends Generator {
   prompting() {
     const prompts = [
+      {
+        name: 'playbookName',
+        type: 'input',
+        message: "What will the new playbook's name be?",
+        require: true,
+      },
       {
         name: 'authorName',
         type: 'input',
@@ -41,7 +50,19 @@ module.exports = class extends Generator {
     });
   }
 
-  writing() {}
+  writing() {
+    const p = this.props;
+
+    const createDestdir = destinationPath => {
+      if (path.basename(this.destinationPath()) !== destinationPath) {
+        this.log(`Destination path ${destinationPath} does not exist, creating it...`);
+        mkdirp(destinationPath);
+        this.destinationRoot(this.destinationPath(destinationPath));
+      }
+    };
+
+    createDestdir(paramCase(p.playbookName));
+  }
 
   install() {}
 };

@@ -37,8 +37,10 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "change-case": "^3.0.2",
     "generator-license": "^5.4.0",
     "git-remote-origin-url": "^2.0.0",
+    "mkdirp": "^0.5.1",
     "yeoman-generator": "^3.1.1"
   },
   "jest": {

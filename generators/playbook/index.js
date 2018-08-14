@@ -29,6 +29,11 @@ module.exports = class extends Generator {
       this.fs.copyTpl(this.templatePath('Makefile'), this.destinationPath('Makefile'), {
         limit: p.limit,
       });
+
+      this.fs.copy(
+        this.templatePath('requirements.yml'),
+        this.destinationPath('requirements.yml'),
+      );
     };
 
     createSkel();

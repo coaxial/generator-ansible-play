@@ -20,4 +20,10 @@ describe('generator-ansible-play:playbook', () => {
 
     expect(actual).toMatchSnapshot();
   });
+
+  it('creates the requirements file', () => {
+    const actual = readFileSync('requirements.yml', 'utf8');
+
+    expect(actual).toMatchSnapshot();
+  });
 });

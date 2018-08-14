@@ -35,3 +35,10 @@ clean:
 	@-rm -f .vault_pass
 "
 `;
+
+exports[`generator-ansible-play:playbook creates the requirements file 1`] = `
+"---
+# - src: https://example.org/user/repo.git
+#   name: user.repo
+"
+`;

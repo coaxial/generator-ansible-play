@@ -30,9 +30,9 @@ module.exports = class extends Generator {
         limit: p.limit,
       });
 
-      this.fs.copy(
-        this.templatePath('requirements.yml'),
-        this.destinationPath('requirements.yml'),
+      const files = ['requirements.yml', 'playbook.yml'];
+      files.forEach(file =>
+        this.fs.copy(this.templatePath(file), this.destinationPath(file)),
       );
     };
 

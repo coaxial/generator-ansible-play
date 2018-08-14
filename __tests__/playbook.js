@@ -26,4 +26,10 @@ describe('generator-ansible-play:playbook', () => {
 
     expect(actual).toMatchSnapshot();
   });
+
+  it('creates the playbook', () => {
+    const actual = readFileSync('playbook.yml', 'utf8');
+
+    expect(actual).toMatchSnapshot();
+  });
 });

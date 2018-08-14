@@ -48,6 +48,7 @@ module.exports = class extends Generator {
       email: p.authorEmail,
       website: p.authorWebsite,
     });
+    this.composeWith(require.resolve('../playbook'));
   }
 
   writing() {

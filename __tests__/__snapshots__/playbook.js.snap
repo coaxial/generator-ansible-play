@@ -66,6 +66,19 @@ clean:
 "
 `;
 
+exports[`generator-ansible-play:playbook with the default answers creates the README file 1`] = `
+"# Test playbook
+
+test description
+
+# Usage
+
+- \`make\` will install the dependencies listed in \`dependencies.yml\`, prompt for the encryption password if \`.vault_pass\` is missing, and run the playbook against the default hosts (i.e. test-host)
+- \`make limit=host1,host2\` will run the playbook on host1 and host2 only instead of the default hosts (i.e. test-host)
+- \`make editvars\` will prompt for the encryption password if \`.vault_pass\` is missing and edit the encrypted variables file at \`vars/enc_vars.yml\`
+"
+`;
+
 exports[`generator-ansible-play:playbook with the default answers creates the playbook 1`] = `
 "---
 - hosts: all

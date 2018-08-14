@@ -10,6 +10,8 @@ describe('generator-ansible-play:playbook', () => {
       return helpers.run(path.join(__dirname, '../generators/playbook')).withPrompts({
         limit: 'test-host',
         bootstrapPython: true,
+        playbookName: 'test',
+        playbookDesc: 'test description',
       });
     });
 
@@ -38,6 +40,12 @@ describe('generator-ansible-play:playbook', () => {
 
       expect(actual).toMatchSnapshot();
     });
+
+    it('creates the README file', () => {
+      const actual = readFileSync('README.md', 'utf8');
+
+      expect(actual).toMatchSnapshot();
+    });
   });
 
   describe('when not bootstrapping Python', () => {
@@ -45,6 +53,8 @@ describe('generator-ansible-play:playbook', () => {
       return helpers.run(path.join(__dirname, '../generators/playbook')).withPrompts({
         limit: 'test-host',
         bootstrapPython: false,
+        playbookName: 'test',
+        playbookDesc: 'test description',
       });
     });
 

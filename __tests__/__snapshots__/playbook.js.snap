@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generator-ansible-play:playbook when not bootstrapping Python creates the playbook 1`] = `
+"---
+- hosts: all
+  become: true
+  # vars:
+  #   - myvar: value
+  vars_files:
+    - vars/enc_vars.yml
+    - vars/vars.yml
+  tasks:
+"
+`;
+
+exports[`generator-ansible-play:playbook when not bootstrapping Python creates the requirements file 1`] = `
+"---
+# If Galaxy is down, use:
+# - src: https://example.org/user/repo.git
+#   name: user.repo
+# Otherwise:
+# - src: coaxial.base
+"
+`;
+
+exports[`generator-ansible-play:playbook with the default answers creates the Makefile 1`] = `
+"limit ?= \\"test-host\\"
+.PHONY: all install_reqs playbook_run clean limit_info editvars
+
+all: limit_info playbook_run
+
+limit_info:
+	@echo 'Running against: $(limit)'
+
+install_reqs:
+	@echo 'Fetching dependencies...'
+	@if [ -s requirements.yml ]; then \\\\
+		ansible-galaxy install -r requirements.yml --force; \\\\
+	fi
+
+# ask user for vault pass and save it with mode 0600, unless it's already saved.
+.vault_pass:
+	@stty -echo; \\\\
+	read -p \\".vault_pass missing, enter vault password: \\" vpwd; \\\\
+	stty echo; \\\\
+	echo $$vpwd > .vault_pass; \\\\
+	chmod 600 .vault_pass; \\\\
+	echo
+
+vars/enc_vars.yml: .vault_pass
+  @echo 'Encrypted vars file missing, creating it first.'
+  @ansible-vault create vars/enc_vars.yml --vault-password-file .vault_pass
+  # ansible-vault create also opens the file for editing, so when make
+  # editvars, it will open it again when running the editvars task
+  @echo 'Encrypted vars file created, will now open it again for editing.'
+
+editvars: .vault_pass
+	@ansible-vault edit vars/enc_vars.yml --vault-password-file .vault_pass
+
+playbook_run: .vault_pass install_reqs
+	@ansible-playbook --limit $(limit) playbook.yml --vault-password-file .vault_pass
+	@- rm -f playbook.retry
+
+clean:
+	@-rm -f .vault_pass
+"
+`;
+
+exports[`generator-ansible-play:playbook with the default answers creates the README file 1`] = `
+"# Test playbook
+
+test description
+
+# Usage
+
+- \`make\` will install the dependencies listed in \`dependencies.yml\`, prompt for the encryption password if \`.vault_pass\` is missing, and run the playbook against the default hosts (i.e. test-host)
+- \`make limit=host1,host2\` will run the playbook on host1 and host2 only instead of the default hosts (i.e. test-host)
+- \`make editvars\` will prompt for the encryption password if \`.vault_pass\` is missing and edit the encrypted variables file at \`vars/enc_vars.yml\`
+"
+`;
+
+exports[`generator-ansible-play:playbook with the default answers creates the playbook 1`] = `
+"---
+- hosts: all
+  become: true
+  gather_facts: false
+  # vars:
+  #   - myvar: value
+  vars_files:
+    - vars/enc_vars.yml
+    - vars/vars.yml
+  tasks:
+    - name: Install Python
+      include_role:
+        name: \\"{{ rolevar.name }}\\"
+      vars: \\"{{ rolevar.vars | default(omit) }}\\"
+      with_items:
+        - name: coaxial.raw-python
+          vars:
+            rawpython__os_family: Debian
+      loop_control:
+        loop_var: rolevar
+
+"
+`;
+
+exports[`generator-ansible-play:playbook with the default answers creates the requirements file 1`] = `
+"---
+# If Galaxy is down, use:
+# - src: https://example.org/user/repo.git
+#   name: user.repo
+# Otherwise:
+# - src: coaxial.base
+- src: coaxial.raw-python
+"
+`;

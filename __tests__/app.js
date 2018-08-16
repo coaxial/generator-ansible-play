@@ -1,32 +1,29 @@
 'use strict';
-const { readFileSync } = require('fs');
+const { basename } = require('path');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
-const { basename } = require('path');
 
 describe('generator-ansible-play:app', () => {
   describe('running on a new project', () => {
     beforeAll(() => {
+      jest.mock('generator-license', () => {
+        const helpers = require('yeoman-test');
+        return helpers.createDummyGenerator();
+      });
+
       return helpers.run(require.resolve('../generators/app')).withPrompts({
         authorName: 'Coaxial',
         authorEmail: 'cxl@example.org',
         authorWebsite: 'https://example.org',
-        license: 'MIT',
-        playbookName: 'test playbook',
+        playName: 'test name',
       });
-    });
-
-    it('creates a LICENSE file with the right information', () => {
-      const actual = readFileSync('LICENSE', 'utf8');
-
-      expect(actual).toMatchSnapshot();
     });
 
     it('creates the destination directory', () => {
       const actual = basename(process.cwd());
-      const expected = 'test-playbook';
+      const expected = 'test-name';
 
-      assert.textEqual(actual, expected);
+      return assert.textEqual(actual, expected);
     });
   });
 });

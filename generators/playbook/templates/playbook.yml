@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+<% if (bootstrapPython) { -%>
+  gather_facts: false
+<% } -%>
+  # vars:
+  #   - myvar: value
+  vars_files:
+    - vars/enc_vars.yml
+    - vars/vars.yml
+  tasks:
+<% if (bootstrapPython) { -%>
+<%- include('fragments/playbook_bootstrap_tasks.yml') %>
+<% } -%>

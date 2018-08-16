@@ -1,4 +1,5 @@
 'use strict';
+const { compose, isNil, not } = require('ramda');
 const Generator = require('yeoman-generator');
 
 module.exports = class extends Generator {
@@ -9,7 +10,10 @@ module.exports = class extends Generator {
         name: 'initGit',
         message: 'Initialize a git repository and generate a .gitignore?',
         default: true,
-        required: true,
+        validate: compose(
+          not,
+          isNil,
+        ),
         store: true,
       },
       {
@@ -18,7 +22,10 @@ module.exports = class extends Generator {
         message: 'What is the hostname for the server hosting the git repo?',
         default: 'github.com',
         when: answers => answers.initGit,
-        required: true,
+        validate: compose(
+          not,
+          isNil,
+        ),
         store: true,
       },
       {
@@ -26,7 +33,10 @@ module.exports = class extends Generator {
         name: 'gitUser',
         message: 'What is the username on the git server?',
         when: answers => answers.initGit,
-        required: true,
+        validate: compose(
+          not,
+          isNil,
+        ),
         store: true,
       },
       {
@@ -34,7 +44,10 @@ module.exports = class extends Generator {
         name: 'gitRepo',
         message: "What is the repo's name on the git server?",
         when: answers => answers.initGit,
-        required: true,
+        validate: compose(
+          not,
+          isNil,
+        ),
       },
     ];
 

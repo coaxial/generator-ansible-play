@@ -1,9 +1,49 @@
 'use strict';
-const { compose, head, isNil, join, juxt, tail, toUpper } = require('ramda');
+const {
+  compose,
+  forEach,
+  head,
+  isEmpty,
+  isNil,
+  join,
+  juxt,
+  not,
+  or,
+  tail,
+  toUpper,
+} = require('ramda');
 const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
 
 module.exports = class extends Generator {
+  constructor(args, options) {
+    super(args, options);
+
+    this.option('playbookName', {
+      type: String,
+      required: false,
+      desc: 'What to name the playbook',
+    });
+
+    this.option('limit', {
+      type: String,
+      required: false,
+      desc: 'Which hosts to target when running the playbook by default',
+    });
+
+    this.option('bootstrapPython', {
+      type: Boolean,
+      required: false,
+      desc: 'Whether to install Python on the target before running the playbook',
+    });
+
+    this.option('playbookDesc', {
+      type: String,
+      required: false,
+      desc: 'A short description of the playbook to populate the README.md file',
+    });
+  }
+
   prompting() {
     const prompts = [
       {
@@ -11,33 +51,56 @@ module.exports = class extends Generator {
         message:
           'Which host will this playbook target? (single host or comma separated list, eg `host1,host2`)',
         type: 'input',
-        required: true,
-        default: 'all',
+        validate: compose(
+          not,
+          isEmpty,
+        ),
+        default: or(this.options.limit, 'all'),
+        when: isNil(this.options.limit),
       },
       {
         name: 'bootstrapPython',
         message: 'Do the targeted hosts need Python installed?',
         type: 'confirm',
-        required: true,
-        default: true,
-      },
-      {
-        name: 'playbookName',
-        message: 'What is the name for this playbook?',
-        type: 'input',
-        required: true,
-        when: answers => isNil(answers.playbookName),
+        validate: compose(
+          not,
+          isEmpty,
+        ),
+        default: or(this.options.bootstrapPython, true),
+        when: isNil(this.options.bootstrapPython),
       },
       {
         name: 'playbookDesc',
         message: 'What does this playbook do? (markdown supported)',
         type: 'input',
-        required: true,
+        validate: compose(
+          not,
+          isEmpty,
+        ),
+        default: or(this.options.playbookDesc, undefined),
+        when: isNil(this.options.playbookDesc),
+      },
+      {
+        name: 'playbookName',
+        message: 'What is the name for this playbook?',
+        type: 'input',
+        validate: compose(
+          not,
+          isEmpty,
+        ),
+        default: or(this.options.playbookName, undefined),
+        when: isNil(this.options.playbookName),
       },
     ];
 
     return this.prompt(prompts).then(props => {
-      this.props = props;
+      this.props = {
+        limit: this.options.limit,
+        bootstrapPython: this.options.bootstrapPython,
+        playbookDesc: this.options.playbookDesc,
+        playbookName: this.options.playbookName,
+        ...props,
+      };
     });
   }
 
@@ -56,7 +119,7 @@ module.exports = class extends Generator {
 
     const createSkel = () => {
       const dirs = ['handlers', 'tasks', 'templates', 'vars'];
-      dirs.forEach(dir => mkdirp(dir));
+      forEach(mkdirp, dirs);
     };
     const createFiles = () => {
       this.fs.copyTpl(this.templatePath('Makefile'), this.destinationPath('Makefile'), {

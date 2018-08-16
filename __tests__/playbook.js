@@ -7,7 +7,7 @@ const path = require('path');
 describe('generator-ansible-play:playbook', () => {
   describe('with the default answers', () => {
     beforeAll(() => {
-      return helpers.run(path.join(__dirname, '../generators/playbook')).withPrompts({
+      return helpers.run(require.resolve('../generators/playbook')).withPrompts({
         limit: 'test-host',
         bootstrapPython: true,
         playbookName: 'test',

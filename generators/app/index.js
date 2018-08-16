@@ -1,7 +1,9 @@
 'use strict';
+const { compose, isNil, not } = require('ramda');
+const { paramCase } = require('change-case');
 const Generator = require('yeoman-generator');
 const mkdirp = require('mkdirp');
-const { paramCase } = require('change-case');
+
 const path = require('path');
 
 module.exports = class extends Generator {
@@ -11,14 +13,20 @@ module.exports = class extends Generator {
         name: 'playName',
         type: 'input',
         message: "What will the new play's name be?",
-        require: true,
+        validate: compose(
+          not,
+          isNil,
+        ),
       },
       {
         name: 'authorName',
         type: 'input',
         message: "Who is this playbook's author?",
         store: true,
-        required: true,
+        validate: compose(
+          not,
+          isNil,
+        ),
       },
       {
         name: 'authorWebsite',
@@ -59,7 +67,7 @@ module.exports = class extends Generator {
     const createDestdir = destinationPath => {
       if (path.basename(this.destinationPath()) !== destinationPath) {
         this.log(`Destination path ${destinationPath} does not exist, creating it...`);
-        mkdirp(destinationPath);
+        mkdirp.sync(destinationPath);
         this.destinationRoot(this.destinationPath(destinationPath));
       }
     };

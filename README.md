@@ -1,5 +1,5 @@
 # generator-ansible-play [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
->  Ansible playbook and associated `make` commands generator for Yeoman
+>  This Yeoman generator will create a new Ansible playbook and associated `make` commands to run and edit it.
 
 ## Installation
 
@@ -15,6 +15,41 @@ Then generate your new project:
 ```bash
 yo ansible-play
 ```
+
+## Folder structure after running the generator
+
+```
+.
+├── .gitignore
+├── handlers
+│   └── main.yml
+├── LICENSE
+├── Makefile
+├── playbook.yml
+├── README.md
+├── requirements.yml
+├── tasks
+│   └── main.yml
+├── templates
+└── vars
+    └── vars.yml
+
+4 directories, 9 files
+```
+
+## `make` commands
+
+`make editvars`: will edit the encrypted variables file at `vars/enc_vars.yml` and prompt for the password if `.vault_pass` is missing. The password will be written to `.vault_pass` to avoid prompting again. `.vault_pass` is secret and shouldn't be committed to git, it is included in the generated `.gitignore` to avoid accidental commits.
+
+`make`: will run the playbook against the default host(s).
+
+`make limit="host1,host2"`: will run the playbook against host1 and host2 instead of the default host(s).
+
+## Questions, issues, and patches
+
+Open an issue on this repo, and a PR to match if you can.
+
+Questions are welcome as issues.
 
 ## Getting To Know Yeoman
 

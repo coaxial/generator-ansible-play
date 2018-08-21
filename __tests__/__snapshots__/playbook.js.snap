@@ -48,11 +48,11 @@ install_reqs:
 	echo
 
 vars/enc_vars.yml: .vault_pass
-  @echo 'Encrypted vars file missing, creating it first.'
-  @ansible-vault create vars/enc_vars.yml --vault-password-file .vault_pass
-  # ansible-vault create also opens the file for editing, so when make
-  # editvars, it will open it again when running the editvars task
-  @echo 'Encrypted vars file created, will now open it again for editing.'
+	@echo 'Encrypted vars file missing, creating it first.'
+	@ansible-vault create vars/enc_vars.yml --vault-password-file .vault_pass
+	# ansible-vault create also opens the file for editing, so when make
+	# editvars, it will open it again when running the editvars task
+	@echo 'Encrypted vars file created, will now open it again for editing.'
 
 editvars: .vault_pass
 	@ansible-vault edit vars/enc_vars.yml --vault-password-file .vault_pass

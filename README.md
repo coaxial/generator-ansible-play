@@ -45,6 +45,8 @@ yo ansible-play
 
 `make limit="host1,host2"`: will run the playbook against host1 and host2 instead of the default host(s).
 
+`make verbosity=-vvv`: will alter verbosity, the values match ansible commands'. Defaults to not verbose.
+
 ## Questions, issues, and patches
 
 Open an issue on this repo, and a PR to match if you can.
